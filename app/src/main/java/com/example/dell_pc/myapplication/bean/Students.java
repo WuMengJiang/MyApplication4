@@ -11,6 +11,7 @@ public class Students {
     private String text;
     private String thumbnail;
     private String top_comments_header;
+
     @Generated(hash = 1926753723)
     public Students(Long id, String text, String thumbnail,
             String top_comments_header) {

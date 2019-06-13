@@ -2,6 +2,7 @@ package com.example.dell_pc.myapplication.framgment;
 
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -22,6 +23,7 @@ import com.example.dell_pc.myapplication.model.MyModel;
 import com.example.dell_pc.myapplication.persenter.MyPresenter;
 import com.example.dell_pc.myapplication.utils.DbUrils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +55,8 @@ public class SchoolFragment extends Fragment implements MyView {
     }
 
     private void initData() {
-            MyPresenter myPresenter = new MyPresenter(new MyModel(), this);
-            myPresenter.getData();
+        MyPresenter myPresenter = new MyPresenter(new MyModel(), this);
+        myPresenter.getData();
         List<Students> qurey = DbUrils.getDbUrils().qurey();
         students.addAll(qurey);
 
@@ -63,10 +65,10 @@ public class SchoolFragment extends Fragment implements MyView {
     private void initView(View inflate) {
         rlv = (RecyclerView) inflate.findViewById(R.id.rlv);
         rlv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rlv.addItemDecoration(new DividerItemDecoration(getContext(),LinearLayout.VERTICAL));
+        rlv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
+
 
         students = new ArrayList<>();
-
         recAdapter = new RecAdapter(getContext());
         rlv.setAdapter(recAdapter);
         recAdapter.setOnClickListener(new RecAdapter.OnClickListener() {
@@ -77,8 +79,11 @@ public class SchoolFragment extends Fragment implements MyView {
             }
         });
     }
+
     @Override
-    public void onSueccess(RecBean recBean) {                                                                                                           resultBeans.addAll(recBean.getResult());recAdapter.setStudents(resultBeans);
+    public void onSueccess(RecBean recBean) {
+        resultBeans.addAll(recBean.getResult());
+        recAdapter.setStudents(resultBeans);
         for (int i = 0; i < resultBeans.size(); i++) {
             Students students = new Students();
             students.setId(Long.valueOf(i));
